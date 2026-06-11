@@ -1,0 +1,184 @@
+{
+"language": "简体中文",
+
+"cleanupPeriodDays": 30,
+"includeCoAuthoredBy": false,
+
+"enableAllProjectMcpServers": false,
+"enabledMcpjsonServers": [],
+"disabledMcpjsonServers": [
+"eduagent-filesystem",
+"eduagent-admin"
+],
+
+"allowUntrustedFrontmatterHooks": false,
+"disableAllHooks": false,
+
+"sandbox": {
+"enabled": true,
+"autoAllowBashIfSandboxed": true,
+"excludedCommands": [
+"docker",
+"docker compose",
+"git push",
+"git commit",
+"alembic upgrade",
+"alembic downgrade"
+],
+"allowUnsandboxedCommands": false,
+"network": {
+"allowLocalBinding": true
+}
+},
+
+"permissions": {
+"allow": [
+"Read",
+"Glob",
+"Grep",
+"LSP",
+
+```
+  "Edit",
+  "MultiEdit",
+
+  "Bash(git status)",
+  "Bash(git diff:*)",
+  "Bash(git log:*)",
+  "Bash(git branch:*)",
+
+  "Bash(cd backend && pytest)",
+  "Bash(cd backend && pytest:*)",
+  "Bash(cd frontend && npm run build)",
+  "Bash(cd frontend && npm run lint)",
+  "Bash(cd frontend && npm run test)",
+  "Bash(cd frontend && npm run test:*)",
+
+  "Bash(cd backend && alembic current)",
+  "Bash(cd backend && alembic history)",
+  "Bash(cd backend && alembic heads)",
+
+  "mcp__eduagent-local__search_course_knowledge",
+  "mcp__eduagent-local__list_course_resources",
+  "mcp__eduagent-local__get_course_resource_summary",
+  "mcp__eduagent-local__get_agent_run_status"
+],
+
+"ask": [
+  "Write",
+
+  "Bash(cd backend && alembic revision:*)",
+  "Bash(cd backend && alembic upgrade head)",
+  "Bash(cd backend && alembic downgrade:*)",
+
+  "Bash(cd backend && uvicorn:*)",
+  "Bash(cd frontend && npm install)",
+  "Bash(cd frontend && npm run dev)",
+
+  "Bash(docker:*)",
+  "Bash(docker compose:*)",
+
+  "Bash(git add:*)",
+  "Bash(git commit:*)",
+  "Bash(git push:*)",
+
+  "WebFetch",
+  "WebSearch",
+
+  "Skill",
+  "SlashCommand",
+
+  "mcp__eduagent-local__analyze_course_resource",
+  "mcp__eduagent-local__generate_course_task_draft",
+  "mcp__eduagent-local__generate_teaching_report_draft"
+],
+
+"deny": [
+  "Read(./.env)",
+  "Read(./.env.*)",
+  "Read(./api-key.txt)",
+  "Read(./secrets/**)",
+  "Read(./credentials.json)",
+  "Read(./config/credentials.json)",
+  "Read(./backend/storage/**)",
+  "Read(./data/**)",
+  "Read(./logs/**)",
+  "Read(./*.log)",
+  "Read(./backend/*.log)",
+  "Read(./frontend/*.log)",
+  "Read(./backend/venv/**)",
+  "Read(./frontend/node_modules/**)",
+
+  "Edit(./.env)",
+  "Edit(./.env.*)",
+  "Edit(./api-key.txt)",
+  "Edit(./secrets/**)",
+  "Edit(./credentials.json)",
+  "Edit(./config/credentials.json)",
+  "Edit(./backend/storage/**)",
+  "Edit(./data/**)",
+  "Edit(./logs/**)",
+  "Edit(./backend/venv/**)",
+  "Edit(./frontend/node_modules/**)",
+
+  "Write(./.env)",
+  "Write(./.env.*)",
+  "Write(./api-key.txt)",
+  "Write(./secrets/**)",
+  "Write(./credentials.json)",
+  "Write(./config/credentials.json)",
+  "Write(./backend/storage/**)",
+  "Write(./data/**)",
+  "Write(./logs/**)",
+  "Write(./backend/venv/**)",
+  "Write(./frontend/node_modules/**)",
+
+  "Bash(rm:*)",
+  "Bash(del:*)",
+  "Bash(rmdir:*)",
+  "Bash(sudo:*)",
+  "Bash(chmod 777:*)",
+  "Bash(chown:*)",
+  "Bash(kill:*)",
+  "Bash(killall:*)",
+  "Bash(pkill:*)",
+
+  "Bash(dropdb:*)",
+  "Bash(psql:*DROP*)",
+  "Bash(psql:*TRUNCATE*)",
+  "Bash(psql:*DELETE*)",
+  "Bash(alembic downgrade base)",
+  "Bash(docker compose down -v:*)",
+
+  "Bash(curl:*)",
+  "Bash(wget:*)",
+  "Bash(nc:*)",
+  "Bash(netcat:*)",
+  "Bash(ssh:*)",
+  "Bash(scp:*)",
+  "Bash(rsync:*)",
+
+  "mcp__eduagent-filesystem",
+  "mcp__eduagent-admin",
+  "mcp__eduagent-local__execute_sql",
+  "mcp__eduagent-local__run_sql",
+  "mcp__eduagent-local__read_env",
+  "mcp__eduagent-local__read_secret",
+  "mcp__eduagent-local__read_any_file",
+  "mcp__eduagent-local__run_shell",
+  "mcp__eduagent-local__delete_course",
+  "mcp__eduagent-local__delete_user",
+  "mcp__eduagent-local__delete_resource",
+  "mcp__eduagent-local__drop_database",
+  "mcp__eduagent-local__truncate_table"
+]
+```
+
+},
+
+"env": {
+"EDUAGENT_ENV": "development",
+"PYTHONPATH": ".",
+"NODE_ENV": "development"
+}
+}

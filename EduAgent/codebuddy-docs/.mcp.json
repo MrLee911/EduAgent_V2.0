@@ -1,0 +1,25 @@
+{
+  "enableAllProjectMcpServers": false,
+  "enabledMcpjsonServers": [
+    "eduagent-local",
+    "eduagent-http"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__eduagent-local__search_course_knowledge",
+      "mcp__eduagent-local__get_course_resource_summary",
+      "mcp__eduagent-local__get_agent_run_status"
+    ],
+    "ask": [
+      "mcp__eduagent-local__analyze_course_resource",
+      "mcp__eduagent-local__generate_course_task_draft",
+      "mcp__eduagent-local__generate_teaching_report_draft"
+    ],
+    "deny": [
+      "mcp__eduagent-filesystem",
+      "mcp__eduagent-local__delete_course",
+      "mcp__eduagent-local__delete_resource",
+      "mcp__eduagent-local__execute_sql"
+    ]
+  }
+}

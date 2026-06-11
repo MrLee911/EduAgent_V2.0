@@ -1,0 +1,41 @@
+# .dockerignore — 项目根目录
+# ============================================================
+# 排除本地开发文件、IDE 配置、文档等
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docs
+*.md
+LICENSE
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.*
+.venv/
+.venv-conda/
+venv/
+
+# Data
+data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CodeBuddy
+codebuddy-docs/

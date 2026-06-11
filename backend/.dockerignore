@@ -1,0 +1,45 @@
+# backend/.dockerignore
+# ============================================================
+# 后端 Docker 构建忽略
+# ============================================================
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+.env
+.env.*
+
+# Virtual env
+.venv/
+venv/
+
+# Packages
+*.egg-info/
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Data
+data/
+uploads/
+chroma_db/
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docs
+*.md

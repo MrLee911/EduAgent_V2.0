@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduAgent - 课程资源与教学任务智能体</title>
+    <script>
+      // 阻止亮色/暗色闪烁（在 CSS 加载前设置）
+      const theme = localStorage.getItem('theme') || 'light';
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    </script>
+  </head>
+  <body class="bg-[var(--bg-page)] text-[var(--text-primary)]">
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

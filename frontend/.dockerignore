@@ -1,0 +1,29 @@
+# frontend/.dockerignore
+# ============================================================
+# 前端 Docker 构建忽略
+# ============================================================
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+.cache/
+
+# Logs
+*.log
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docs
+*.md

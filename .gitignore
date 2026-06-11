@@ -1,0 +1,49 @@
+# ============================================================
+# .gitignore — EduAgent 项目 Git 忽略配置
+# ============================================================
+
+# Environment
+.env
+.env.local
+.env.*.local
+api-key.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+.venv-conda/
+venv/
+
+# Node
+node_modules/
+dist/
+.cache/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Data
+data/postgres/
+data/redis/
+data/chromadb/
+data/minio/
+data/uploads/*
+!data/uploads/.gitkeep
+chroma_db/
+backend/storage/
+
+# OS
+.DS_Store
+Thumbs.db

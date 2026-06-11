@@ -1,0 +1,24 @@
+# backend/Dockerfile.celery
+# ============================================================
+# Celery Worker — 与 Backend 共用基础层
+# ============================================================
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+# Celery Worker
+# -A app.celery_app → Celery 实例位置
+# -Q default,rag → 监听两个队列（通用 + RAG 处理）
+# -c 2 → 每个 worker 2 个并发（资源有限时用并发而非多 worker）
+CMD ["celery", "-A", "app.celery_app", "worker", \
+     "-l", "info", "-Q", "default,rag", "-c", "2"]
