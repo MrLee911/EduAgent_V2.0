@@ -14,6 +14,7 @@ from app.schemas.common import ApiResponse, PaginationMeta
 from app.schemas.qa import (
     QAAskRequest, QAFeedbackRequest,
     QAResponse, QAHistoryItemResponse,
+    ConversationItemResponse,
 )
 from app.services import qa_service
 
@@ -122,8 +123,24 @@ async def clear_conversation(
     conversation_id: str,
     course: Course = Depends(verify_course_exists),
     _member=Depends(verify_course_member),
+    db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """清空对话上下文（Redis 缓存）"""
-    await qa_service.clear_conversation(conversation_id)
-    return ApiResponse(message="对话上下文已清空", data=None)
+    """删除对话及其所有问答记录"""
+    deleted_count = await qa_service.delete_conversation(
+        db, str(course.id), current_user, conversation_id,
+    )
+    return ApiResponse(message=f"已删除 {deleted_count} 条问答记录", data=None)
+
+
+# ── 5.7 获取对话列表 ──
+@router.get("/{course_id}/qa/conversations", response_model=ApiResponse[list[ConversationItemResponse]])
+async def get_conversations(
+    course: Course = Depends(verify_course_exists),
+    _member=Depends(verify_course_member),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """获取当前课程下用户的对话列表（按 conversation_id 分组）"""
+    items = await qa_service.get_conversations(db, str(course.id), current_user)
+    return ApiResponse(data=items)

@@ -147,6 +147,13 @@ export interface QAHistoryItem {
   created_at: string
 }
 
+export interface ConversationItem {
+  conversation_id: string
+  first_question: string
+  message_count: number
+  last_active_at: string | null
+}
+
 export interface QAAskRequest {
   question: string
   conversation_id?: string

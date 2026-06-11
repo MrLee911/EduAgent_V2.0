@@ -72,4 +72,12 @@ class QAHistoryItemResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class ConversationItemResponse(BaseModel):
+    """对话列表项（按 conversation_id 分组）"""
+    conversation_id: str
+    first_question: str = ""
+    message_count: int = 0
+    last_active_at: Optional[str] = None
+
+
 # QADetailResponse 复用 QAResponse（含完整 answer + sources）

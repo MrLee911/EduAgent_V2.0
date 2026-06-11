@@ -4,6 +4,7 @@ import type {
   ApiResponse,
   QARecord,
   QAHistoryItem,
+  ConversationItem,
   QAAskRequest,
   PaginationMeta,
 } from '@/types'
@@ -52,8 +53,15 @@ export const qaApi = {
     )
   },
 
-  /** 清除对话 */
-  clearConversation(courseId: string, conversationId: string) {
+  /** 获取对话列表 */
+  conversations(courseId: string) {
+    return client.get<any, ApiResponse<ConversationItem[]>>(
+      `/courses/${courseId}/qa/conversations`
+    )
+  },
+
+  /** 删除对话（含所有问答记录） */
+  deleteConversation(courseId: string, conversationId: string) {
     return client.delete<any, ApiResponse<null>>(
       `/courses/${courseId}/qa/conversation/${conversationId}`
     )

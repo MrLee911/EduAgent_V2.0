@@ -4,7 +4,7 @@ import json
 import re
 from typing import AsyncGenerator, Optional
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, and_
+from sqlalchemy import select, func, and_, delete
 from app.models.user import User
 from app.models.course import Course
 from app.models.resource import Resource, Chunk
@@ -678,3 +678,64 @@ async def clear_conversation(
         await r.close()
     except Exception:
         pass  # Redis 不可用时不阻断
+
+
+async def get_conversations(
+    db: AsyncSession,
+    course_id: str,
+    user: User,
+) -> list[dict]:
+    """获取当前课程下用户的对话列表（按 conversation_id 分组）"""
+    from sqlalchemy import func as sa_func
+
+    # 按 conversation_id 分组，获取每个对话的第一条问题和最后活跃时间
+    stmt = (
+        select(
+            QARecord.conversation_id,
+            sa_func.min(QARecord.question).label("first_question"),
+            sa_func.count(QARecord.id).label("message_count"),
+            sa_func.max(QARecord.created_at).label("last_active_at"),
+        )
+        .where(
+            QARecord.course_id == course_id,
+            QARecord.user_id == user.id,
+            QARecord.conversation_id != "",
+        )
+        .group_by(QARecord.conversation_id)
+        .order_by(sa_func.max(QARecord.created_at).desc())
+    )
+    rows = (await db.execute(stmt)).all()
+
+    result = []
+    for row in rows:
+        result.append({
+            "conversation_id": row.conversation_id,
+            "first_question": row.first_question or "",
+            "message_count": row.message_count,
+            "last_active_at": str(row.last_active_at) if row.last_active_at else None,
+        })
+    return result
+
+
+async def delete_conversation(
+    db: AsyncSession,
+    course_id: str,
+    user: User,
+    conversation_id: str,
+) -> int:
+    """删除对话及其所有问答记录，返回删除的记录数"""
+    # 先清除 Redis 缓存
+    await clear_conversation(conversation_id)
+
+    # 删除数据库中该对话的所有记录
+    stmt = (
+        delete(QARecord)
+        .where(
+            QARecord.conversation_id == conversation_id,
+            QARecord.course_id == course_id,
+            QARecord.user_id == user.id,
+        )
+    )
+    result = await db.execute(stmt)
+    await db.commit()
+    return result.rowcount
